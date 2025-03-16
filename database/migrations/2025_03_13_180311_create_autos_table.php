@@ -16,11 +16,9 @@ return new class extends Migration
             $table->year('anno');
             $table->string('marca');
             $table->string('modello');
-            $table->string('tipologia');
             $table->integer('cilindrata');
             $table->integer('cavalli');
             $table->string('emissioni');
-            $table->string('carburante');
             $table->integer('km')->nullable();
             $table->string('colore');
             $table->integer('posti');

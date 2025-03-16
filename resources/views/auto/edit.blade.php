@@ -23,6 +23,18 @@
             <input type="text" class="form-control" id="modello" name="modello" value="{{ old('modello', $auto->modello) }}" required>
         </div>
 
+        <label for="tipologia_id">Tipologia:</label>
+        <select class='form-select' name="tipologia_id" id="tipologia_id">
+
+            @foreach($tipologie as $tipologia)
+                <option value="{{ $tipologia->id }}" {{ old('tipologia_id', $auto->tipologia_id) == $tipologia->id ? 'selected' : '' }}>
+                    {{ $tipologia->nome }}
+                </option>
+            @endforeach
+
+        </select>
+
+
         <div class="form-group">
             <label for="cilindrata">Cilindrata</label>
             <input type="number" class="form-control" id="cilindrata" name="cilindrata" value="{{ old('cilindrata', $auto->cilindrata) }}" required>
@@ -38,10 +50,18 @@
             <input type="text" class="form-control" id="emisione" name="emissioni" value="{{ old('emissioni', $auto->emissioni) }}" required>
         </div>
 
-        <div class="form-group">
-            <label for="carburante">Carburante</label>
-            <input type="text" class="form-control" id="carburante" name="carburante" value="{{ old('carburante', $auto->carburante) }}" required>
-        </div>
+        <label for="carburante_id">Carburante:</label>
+        <select class='form-select' name="carburante_id" id="carburante_id">
+
+            @foreach($carburanti as $carburante)
+                <option value="{{ $carburante->id }}" {{ old('carburante_id', $auto->carburante_id) == $carburante->id ? 'selected' : '' }}>
+                    {{ $carburante->nome }}
+                </option>
+            @endforeach
+
+        </select>
+
+
 
         <div class="form-group">
             <label for="km">Km</label>

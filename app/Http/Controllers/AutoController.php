@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Auto;
+use App\Models\Carburante;
+use App\Models\Tipologia;
 
 class AutoController extends Controller
 {
@@ -36,7 +38,10 @@ class AutoController extends Controller
     // Metodo per mostrare il form di creazione dell'auto
     public function create()
     {
-        return view('auto.create');
+        $auto =new Auto();
+        $tipologie = Tipologia::all();
+        $carburanti = Carburante::all();
+        return view('auto.create' , compact('auto', 'tipologie','carburanti'));
     }
 
 
@@ -51,17 +56,17 @@ class AutoController extends Controller
             'anno' => 'required|integer',
             'marca' => 'required|string|max:255',
             'modello' => 'required|string|max:255',
-            'tipologia' => 'required|string|max:255',
             'cilindrata' => 'required|integer',
             'cavalli' => 'required|integer',
             'emissioni' => 'required|string|max:255',
-            'carburante' => 'required|string|max:255',
             'km' => 'required|integer',
             'colore' => 'required|string|max:255',
             'posti' => 'required|integer',
             'porte' => 'required|integer',
             'prezzo' => 'required|integer',
             'nuova' => 'required|boolean',
+            'tipologia_id' => 'required|exists:tipologias,id',
+            'carburante_id' => 'required|exists:carburantes,id'
         ]);
 
         // Creazione di un nuovo oggetto Auto
@@ -69,17 +74,17 @@ class AutoController extends Controller
         $auto->anno = $data['anno'];
         $auto->marca = $data['marca'];
         $auto->modello = $data['modello'];
-        $auto->tipologia = $data['tipologia'];
         $auto->cilindrata = $data['cilindrata'];
         $auto->cavalli = $data['cavalli'];
         $auto->emissioni = $data['emissioni'];
-        $auto->carburante = $data['carburante'];
         $auto->km = $data['km'];
         $auto->colore = $data['colore'];
         $auto->posti = $data['posti'];
         $auto->porte = $data['porte'];
         $auto->prezzo = $data['prezzo'];
         $auto->nuova = $data['nuova'];
+        $auto->tipologia_id = $data['tipologia_id'];
+        $auto->carburante_id = $data['carburante_id'];
 
             // Controllo se è stata caricata un'immagine
         if ($request->hasFile('foto')) {
@@ -100,8 +105,10 @@ class AutoController extends Controller
     public function edit($id)
     {
         $auto = Auto::findOrFail($id);
+        $tipologie = Tipologia::all();
+        $carburanti = Carburante::all();
 
-        return view('auto.edit', compact('auto'));
+        return view('auto.edit', compact('auto', 'tipologie','carburanti'));
     }
 
 
@@ -119,13 +126,14 @@ class AutoController extends Controller
             'cilindrata' => 'required|integer',
             'cavalli' => 'required|integer',
             'emissioni' => 'required|string|max:255',
-            'carburante' => 'required|string|max:255',
             'km' => 'required|integer',
             'colore' => 'required|string|max:255',
             'posti' => 'required|integer',
             'porte' => 'required|integer',
             'prezzo' => 'required|integer',
             'nuova' => 'required|boolean',
+            'tipologia_id' => 'required|exists:tipologias,id',
+            'carburante_id' => 'required|exists:carburantes,id',
         ]);
 
         $auto = Auto::findOrFail($id);
@@ -150,6 +158,8 @@ class AutoController extends Controller
             'porte' => $request->porte,
             'prezzo' => $request->prezzo,
             'nuova' => $request->nuova,
+            'tipologia_id'=> $request->tipologia_id,
+            'carburante_id'=> $request->carburante_id,
         ]);
 
         return redirect()->route('auto.index')->with('success', 'Auto aggiornata con successo!');

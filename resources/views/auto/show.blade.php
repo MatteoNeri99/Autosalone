@@ -10,8 +10,9 @@
             <h5 class="card-title">{{ $auto->marca }} {{ $auto->modello }}</h5>
             <p class="card-text">Anno: {{ $auto->anno }}</p>
             <p class="card-text">Cilindrata: {{ $auto->cilindrata }} CC</p>
+            <p class="card-text">Tipologia: {{ $auto->tipologia->nome }}</p>
             <p class="card-text">Cavalli: {{ $auto->cavalli }} CV</p>
-            <p class="card-text">Carburante: {{ $auto->carburante }}</p>
+            <p class="card-text">Carburante: {{ $auto->carburante->nome }}</p>
             <p class="card-text">Km: {{ $auto->km }} km</p>
             <p class="card-text">Colore: {{ $auto->colore }}</p>
             <p class="card-text">Posti: {{ $auto->posti }}</p>

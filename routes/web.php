@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AutoController;
+use App\Http\Controllers\AuthController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,8 +16,8 @@ use App\Http\Controllers\AutoController;
 |
 */
 
-Route::get('/', function () {
-    return view('auto.index');
+Route::get('', function () {
+    return view('auth.login');
 });
 
 Auth::routes();
