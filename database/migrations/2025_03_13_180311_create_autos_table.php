@@ -25,7 +25,8 @@ return new class extends Migration
             $table->integer('porte');
             $table->integer('prezzo');
             $table->boolean('nuova')->default(true);
-            $table->string('foto')->nullable(); // Percorso immagine
+            $table->json('foto')->nullable(); // Percorso immagine
+            $table->text('descrizione');
             $table->timestamps();
         });
     }

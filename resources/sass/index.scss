@@ -1,0 +1,21 @@
+.contenitore{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.contenitore-card{
+    width: 70%;
+    margin-right: 3rem;
+}
+
+
+form{
+    width: 20%;
+    margin-right: 5%;
+    justify-self: start;
+}
+
+.filtro{
+    margin-bottom: 2%;
+}

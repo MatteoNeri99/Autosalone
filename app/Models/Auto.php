@@ -12,7 +12,7 @@ class Auto extends Model
     protected $fillable = [
        'anno', 'marca', 'modello','cilindrata', 'cavalli',
         'emissioni', 'km', 'colore', 'posti', 'porte', 'prezzo',
-        'nuova', 'foto', 'tipologia_id','carburante_id',
+        'nuova', 'foto', 'tipologia_id','carburante_id','descrizione'
     ];
 
 
@@ -24,4 +24,8 @@ class Auto extends Model
     public function tipologia(){
         return $this->belongsTo(Tipologia::class);
     }
+
+    protected $casts = [
+        'images' => 'array', // Laravel convertirà automaticamente JSON in un array PHP
+    ];
 }

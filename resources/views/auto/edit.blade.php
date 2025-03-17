@@ -89,16 +89,21 @@
         </div>
 
         <div class="form-group">
-            <label for="nuova">Nuova</label>
+            <label for="nuova">Condizione</label>
             <select class="form-control" id="nuova" name="nuova" required>
-                <option value="1" {{ $auto->nuova == 1 ? 'selected' : '' }}>Sì</option>
-                <option value="0" {{ $auto->nuova == 0 ? 'selected' : '' }}>No</option>
+                <option value="1" {{ $auto->nuova == 1 ? 'selected' : '' }}>Nuova</option>
+                <option value="0" {{ $auto->nuova == 0 ? 'selected' : '' }}>Usata</option>
             </select>
         </div>
 
         <div class="form-group">
-            <label for="foto">Foto</label>
-            <input type="file" class="form-control-file" id="foto" name="foto">
+            <label for="descrizione">Descrizione</label>
+            <textarea class="form-control" id="descrizione" name="descrizione" required>{{ old('descrizione', $auto->descrizione) }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="foto">Foto (puoi caricare più immagini):</label>
+            <input type="file" name="foto[]" multiple>
         </div>
 
         <button type="submit" class="btn btn-primary">Modifica Auto</button>

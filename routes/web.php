@@ -22,5 +22,7 @@ Route::get('', function () {
 
 Auth::routes();
 
-
+Route::get('/auto/search', [AutoController::class, 'search'])->name('auto.search');
 Route::resource('/auto', AutoController::class);
+
+

@@ -97,8 +97,13 @@
         </div>
 
         <div class="form-group">
+            <label for="descrizione">Descrizione</label>
+            <textarea class="form-control" id="descrizione" name="descrizione" required> </textarea>
+        </div>
+
+        <div class="form-group">
             <label for="foto">Foto</label>
-            <input type="file" class="form-control-file" id="foto" name="foto">
+            <input type="file" class="form-control-file" id="foto" name="foto[]"  multiple required>
         </div>
 
         <input type="submit" class="btn btn-primary">Aggiungi Auto</input>
