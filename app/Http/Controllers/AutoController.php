@@ -71,6 +71,7 @@ class AutoController extends Controller
             'tipologia_id' => 'required|exists:tipologias,id',
             'carburante_id' => 'required|exists:carburantes,id',
             'descrizione' => 'required|string',
+            'status' => 'required|in:disponibile,venduta',
         ]);
 
         // Creazione di un nuovo oggetto Auto
@@ -90,6 +91,7 @@ class AutoController extends Controller
         $auto->tipologia_id = $data['tipologia_id'];
         $auto->carburante_id = $data['carburante_id'];
         $auto->descrizione = $data['descrizione'];
+        $auto->status = $data['status'];
 
         // Salvataggio delle immagini
         $fotoPaths = [];
@@ -144,6 +146,7 @@ class AutoController extends Controller
             'tipologia_id' => 'required|exists:tipologias,id',
             'carburante_id' => 'required|exists:carburantes,id',
             'descrizione' => 'required|string',
+            'status' => 'required|in:disponibile,venduta',
         ]);
 
         $auto = Auto::findOrFail($id);
@@ -186,6 +189,7 @@ class AutoController extends Controller
             'tipologia_id' => $request->tipologia_id,
             'carburante_id' => $request->carburante_id,
             'descrizione' => $request->descrizione,
+            'status' => $request->status,
         ]);
 
         return redirect()->route('auto.index')->with('success', 'Auto aggiornata con successo!');
@@ -202,19 +206,8 @@ class AutoController extends Controller
             $query->where('marca', 'like', '%' . $request->marca . '%');
         }
 
-        // Filtraggio per anno
-        if ($request->has('anno') && $request->anno != '') {
-            $query->where('anno', $request->anno);
-        }
-
-        // Filtraggio per prezzo minimo
-        if ($request->has('prezzo_min') && $request->prezzo_min != '') {
-            $query->where('prezzo', '>=', $request->prezzo_min);
-        }
-
-        // Filtraggio per prezzo massimo
-        if ($request->has('prezzo_max') && $request->prezzo_max != '') {
-            $query->where('prezzo', '<=', $request->prezzo_max);
+        if ($request->has('modello') && $request->modello != '') {
+            $query->where('modello', 'like', '%' . $request->modello . '%');
         }
 
         // Filtraggio per condizione (nuova o usata)
@@ -222,19 +215,8 @@ class AutoController extends Controller
             $query->where('nuova', $request->nuova);
         }
 
-        // Filtraggio per tipologia (selezione della tipologia)
-        if ($request->has('tipologia_id') && $request->tipologia_id != '') {
-            $query->where('tipologia_id', $request->tipologia_id);
-        }
-
-        // Filtraggio per carburante
-        if ($request->has('carburante_id') && $request->carburante_id != '') {
-            $query->where('carburante_id', $request->carburante_id);
-        }
-
-        // Filtraggio per colore
-        if ($request->has('colore') && $request->colore != '') {
-            $query->where('colore', 'like', '%' . $request->colore . '%');
+        if ($request->has('status') && $request->status != '') {
+            $query->where('status', $request->status);
         }
 
         // Esegui la query e ottieni i risultati
@@ -249,21 +231,33 @@ class AutoController extends Controller
 
 
 
-
-
-
-
-
-
     // Metodo per eliminare un'auto dal database
     public function destroy($id)
     {
         $auto = Auto::findOrFail($id);
-
-        // Elimina il record dal database
         $auto->delete();
 
-        return redirect()->route('auto.index')->with('success', 'Auto eliminata con successo!');
+        return redirect()->route('auto.index')->with('success', 'Auto spostata nel cestino!');
+    }
+
+    public function restore($id)
+    {
+        $auto = Auto::withTrashed()->findOrFail($id);
+        $auto->restore(); // Ripristina l'auto
+        return redirect()->back()->with('success', 'Auto ripristinata con successo.');
+    }
+
+    public function forceDelete($id)
+    {
+        $auto = Auto::withTrashed()->findOrFail($id);
+        $auto->forceDelete(); // Elimina definitivamente l'auto
+        return redirect()->back()->with('success', 'Auto eliminata definitivamente.');
+    }
+
+    public function trashed()
+    {
+        $trashedAutos = Auto::onlyTrashed()->get(); // Recupera solo le auto nel cestino
+        return view('auto.cestino', compact('trashedAutos'));
     }
 }
 

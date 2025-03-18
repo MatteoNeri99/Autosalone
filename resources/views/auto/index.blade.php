@@ -2,16 +2,13 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-fluid mt-5">
 
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
+
     <div class="contenitore">
-
-
-
         <form class="form" method="GET" action="{{ route('auto.search') }}">
             <div class="form-group filtro">
                 <label for="marca">Marca</label>
@@ -19,18 +16,8 @@
             </div>
 
             <div class="form-group filtro">
-                <label for="anno">Anno</label>
-                <input type="number" name="anno" class="form-control" value="{{ request('anno') }}">
-            </div>
-
-            <div class="form-group filtro">
-                <label for="prezzo_min">Prezzo Minimo</label>
-                <input type="number" name="prezzo_min" class="form-control" value="{{ request('prezzo_min') }}">
-            </div>
-
-            <div class="form-group filtro">
-                <label for="prezzo_max">Prezzo Massimo</label>
-                <input type="number" name="prezzo_max" class="form-control" value="{{ request('prezzo_max') }}">
+                <label for="modello">Modello</label>
+                <input type="text" name="modello" class="form-control" value="{{ request('modello') }}">
             </div>
 
             <div class="form-group filtro">
@@ -43,35 +30,15 @@
             </div>
 
             <div class="form-group filtro">
-                <label for="tipologia_id">Tipologia</label>
-                <select name="tipologia_id" class="form-control">
-                    <option value="">Tutte</option>
-                    @foreach($tipologie as $tipologia)
-                        <option value="{{ $tipologia->id }}" {{ request('tipologia_id') == $tipologia->id ? 'selected' : '' }}>
-                            {{ $tipologia->nome }}
-                        </option>
-                    @endforeach
+                <label for="status">Filtra per disponibilità</label>
+                <select name="status" id="status" class="form-control" onchange="this.form.submit()">
+                    <option value="" @if(request('status') == '') selected @endif>Tutti</option>
+                    <option value="disponibile" @if(request('status') == 'disponibile') selected @endif>Disponibile</option>
+                    <option value="venduta" @if(request('status') == 'venduta') selected @endif>Venduta</option>
                 </select>
             </div>
 
-            <div class="form-group filtro">
-                <label for="carburante_id">Carburante</label>
-                <select name="carburante_id" class="form-control">
-                    <option value="">Tutti</option>
-                    @foreach($carburanti as $carburante)
-                        <option value="{{ $carburante->id }}" {{ request('carburante_id') == $carburante->id ? 'selected' : '' }}>
-                            {{ $carburante->nome }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-
-            <div class="form-group filtro">
-                <label for="colore">Colore</label>
-                <input type="text" name="colore" class="form-control" value="{{ request('colore') }}">
-            </div>
-
-            <button type="submit" class="btn btn-primary">Filtra</button>
+            <button type="submit" class="btn btn-primary filtra">Filtra</button>
         </form>
 
 
@@ -99,18 +66,26 @@
                                     {{ $auto->nuova ? 'Nuova' : 'Usata' }}
                                 </span>
                             </p>
+
+                            <p class="card-text"><strong>Disponibilita:</strong>
+                                <span class="badge {{ $auto->status == 'disponibile' ? 'bg-success' : 'bg-danger' }}">
+                                    {{ $auto->status  == 'disponibile' ? 'Disponibile' : 'venduta' }}
+                                </span>
+                            </p>
                             <a href="{{ route('auto.show', $auto) }}" class="btn btn-primary">Dettagli</a>
                             <a href="{{ route('auto.edit', $auto) }}" class="btn btn-warning">Modifica</a>
                             <form action="{{ route('auto.destroy', $auto) }}" method="POST" class="d-inline">
                                 @csrf @method('DELETE')
-                                <button type="submit" class="btn btn-danger" onclick="return confirm('Sei sicuro di voler eliminare questa auto?');">Elimina</button>
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Sei sicuro di voler spostare questa auto nel cestino?');">Cestina</button>
                             </form>
                         </div>
                     </div>
                 </div>
             @endforeach
         </div>
+
     </div>
+
 </div>
 
 @endsection

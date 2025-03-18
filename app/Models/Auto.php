@@ -4,15 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Auto extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     protected $fillable = [
        'anno', 'marca', 'modello','cilindrata', 'cavalli',
         'emissioni', 'km', 'colore', 'posti', 'porte', 'prezzo',
-        'nuova', 'foto', 'tipologia_id','carburante_id','descrizione'
+        'nuova', 'foto', 'tipologia_id','carburante_id','descrizione','status',
     ];
 
 
