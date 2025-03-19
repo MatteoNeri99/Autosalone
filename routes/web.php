@@ -1,10 +1,9 @@
 <?php
 
+use App\Http\Controllers\AdminAuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AutoController;
-use App\Http\Controllers\AuthController;
 use App\Models\Auto;
-use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,24 +16,31 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
+
+
 Route::get('', function () {
     return view('auth.login');
+})->name('admin.login');
+
+Route::post('login', [AdminAuthController::class, 'login'])->name('admin.login.submit');
+
+Route::middleware(['auth:admin'])->group(function () {
+    Route::get('/home', function () {
+        $auto = Auto::count();
+        return view('home', compact('auto'));
+    })->name('admin.home');
+
+    Route::get('/auto/search', [AutoController::class, 'search'])->name('auto.search');
+    Route::resource('/auto', AutoController::class);
+
+    Route::get('/cestino', [AutoController::class, 'trashed'])->name('auto.cestino');
+    Route::get('/cestino/ripristina/{id}', [AutoController::class, 'restore'])->name('auto.restore');
+    Route::get('/cestino/elimina/{id}', [AutoController::class, 'forceDelete'])->name('auto.forceDelete');
+
+    Route::post('/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
 });
 
-Auth::routes();
 
-Route::get('/home', function () {
-    $auto = Auto::count();
-    return view('home', compact('auto'));
-});
-Route::get('/auto/search', [AutoController::class, 'search'])->name('auto.search');
-Route::resource('/auto', AutoController::class);
-
-use App\Http\Controllers\AmutoController;
-
-Route::get('/cestino', [AutoController::class, 'trashed'])->name('auto.cestino'); // Mostra il cestino
-Route::get('/cestino/ripristina/{id}', [AutoController::class, 'restore'])->name('auto.restore'); // Ripristina un'auto
-Route::get('/cestino/elimina/{id}', [AutoController::class, 'forceDelete'])->name('auto.forceDelete'); // Elimina definitivamente
 
 
 

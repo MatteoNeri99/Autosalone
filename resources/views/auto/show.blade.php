@@ -7,9 +7,14 @@
 
 <div class="background">
 
+    <p class="titolo">Dettagli Auto: <strong>{{ $auto->marca }} {{ $auto->modello }}</strong></p>
+    <hr>
+
     <div class="card-container">
 
+
         <div class="carousel-container">
+
 
             <button id="prevBtn" class="carousel-btn">❮</button>
 
@@ -23,11 +28,11 @@
 
         </div>
 
-        <div class="card-body dettagli">
-            <h1>Dettagli Auto</h1>
-            <h5 class="card-title">{{ $auto->marca }} {{ $auto->modello }}</h5>
-            <p class="card-text">Anno: {{ $auto->anno }}</p>
-            <p class="card-text">Cilindrata: {{ $auto->cilindrata }} CC</p>
+
+
+        <div >
+            <p >Anno: {{ $auto->anno }}</p>
+            <p >Cilindrata: {{ $auto->cilindrata }} CC</p>
             <p class="card-text">Tipologia: {{ $auto->tipologia->nome }}</p>
             <p class="card-text">Cavalli: {{ $auto->cavalli }} CV</p>
             <p class="card-text">Carburante: {{ $auto->carburante->nome }}</p>
@@ -42,7 +47,7 @@
     </div>
 
     <div class="descrizione">
-        <h2>descrizione :</h2>
+        <h2>Descrizione :</h2>
         <p>{{ $auto->descrizione }}</p>
     </div>
 

@@ -57,7 +57,7 @@
                         @endif
 
                         <div class="card-body">
-                            <h5 class="card-title">{{ $auto->marca }} {{ $auto->modello }}</h5>
+                            <h3 class="card-title">{{ $auto->marca }} {{ $auto->modello }}</h3>
                             <p class="card-text"><strong>Anno:</strong> {{ $auto->anno }}</p>
                             <p class="card-text"><strong>Prezzo:</strong> €{{ number_format($auto->prezzo, 2, ',', '.') }}</p>
                             <p class="card-text"><strong>KM:</strong> {{ $auto->km ?? 'N/A' }}</p>
