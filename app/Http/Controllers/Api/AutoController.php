@@ -11,7 +11,17 @@ class AutoController extends Controller
     // Restituisce tutte le auto
     public function index()
     {
-        return response()->json(Auto::all(), 200);
+        $autos = Auto::all();
+
+        // Modifica il campo delle immagini per restituire l'URL completo
+        $autos->each(function ($auto) {
+            // Decodifica l'array di immagini e aggiungi il percorso completo
+            $auto->immagini = collect(json_decode($auto->foto))->map(function ($img) {
+                return url('storage/' . $img); // Usa url() invece di asset()
+            });
+        });
+
+        return response()->json($autos);
     }
 
     // Mostra i dettagli di un'auto specifica

@@ -45,7 +45,7 @@
         <div class="row contenitore-card">
             @foreach($auto as $auto)
                 <div class="col-md-4">
-                    <div class="card mb-4 shadow-sm">
+                    <div class="card mb-4 auto-card">
                         @php
                             $immagini = json_decode($auto->foto, true);
                         @endphp
@@ -72,11 +72,11 @@
                                     {{ $auto->status  == 'disponibile' ? 'Disponibile' : 'venduta' }}
                                 </span>
                             </p>
-                            <a href="{{ route('auto.show', $auto) }}" class="btn btn-primary">Dettagli</a>
-                            <a href="{{ route('auto.edit', $auto) }}" class="btn btn-warning">Modifica</a>
+                            <a href="{{ route('auto.show', $auto) }}" class="btn btn-primary azioni">Dettagli</a>
+                            <a href="{{ route('auto.edit', $auto) }}" class="btn btn-warning azioni">Modifica</a>
                             <form action="{{ route('auto.destroy', $auto) }}" method="POST" class="d-inline">
                                 @csrf @method('DELETE')
-                                <button type="submit" class="btn btn-danger" onclick="return confirm('Sei sicuro di voler spostare questa auto nel cestino?');">Cestina</button>
+                                <button type="submit" class="btn btn-danger azioni" onclick="return confirm('Sei sicuro di voler spostare questa auto nel cestino?');">Cestina</button>
                             </form>
                         </div>
                     </div>
