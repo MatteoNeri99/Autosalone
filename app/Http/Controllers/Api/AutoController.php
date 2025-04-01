@@ -9,37 +9,9 @@ use Illuminate\Http\Request;
 class AutoController extends Controller
 {
     // Restituisce tutte le auto
-    public function index()
+    public function index(Request $request)
     {
-        $autos = Auto::all();
-
-        // Modifica il campo delle immagini per restituire l'URL completo
-        $autos->each(function ($auto) {
-            // Decodifica l'array di immagini e aggiungi il percorso completo
-            $auto->immagini = collect(json_decode($auto->foto))->map(function ($img) {
-                return url('storage/' . $img); // Usa url() invece di asset()
-            });
-        });
-
-        return response()->json($autos);
-    }
-
-    // Mostra i dettagli di un'auto specifica
-    public function show($id)
-    {
-        $auto = Auto::find($id);
-
-        if (!$auto) {
-            return response()->json(['message' => 'Auto non trovata'], 404);
-        }
-
-        return response()->json($auto, 200);
-    }
-
-    // Ricerca avanzata per auto
-    public function search(Request $request)
-    {
-        $query = Auto::query();
+        $query = Auto::with(['carburante', 'tipologia']); // Includi relazioni
 
         // Filtri opzionali
         if ($request->filled('marca')) {
@@ -94,6 +66,49 @@ class AutoController extends Controller
             $query->where('nuova', filter_var($request->nuova, FILTER_VALIDATE_BOOLEAN));
         }
 
-        return response()->json($query->get(), 200);
+        if ($request->filled('carburante_id')) {
+            $query->where('carburante_id', $request->carburante_id);
+        }
+
+        // Recupera le auto filtrate
+        $autos = $query->get();
+
+        // Modifica il campo delle immagini e sostituisce ID con nome
+        $autos->each(function ($auto) {
+            // Decodifica l'array di immagini e aggiungi il percorso completo
+            $auto->immagini = collect(json_decode($auto->foto))->map(function ($img) {
+                return url('storage/' . $img);
+            });
+
+            // Sostituisci l'ID con il nome delle relazioni
+            $auto->carburante = $auto->carburante ? $auto->carburante->nome : null;
+            $auto->tipologia = $auto->tipologia ? $auto->tipologia->nome : null;
+        });
+
+        return response()->json($autos);
     }
+
+    public function show($id)
+    {
+        $auto = Auto::find($id);
+
+        if (!$auto) {
+            return response()->json(['message' => 'Auto non trovata'], 404);
+        }
+
+        // Decodifica l'array JSON e aggiunge il percorso completo
+        $auto->immagini = collect(json_decode($auto->foto))->map(function ($img) {
+            return url('storage/' . $img);
+        });
+
+        $auto->carburante_nome = $auto->carburante ? $auto->carburante->nome : null;
+        $auto->tipologia_nome = $auto->tipologia ? $auto->tipologia->nome : null;
+
+
+        return response()->json($auto, 200);
+    }
+
+
+
+
 }

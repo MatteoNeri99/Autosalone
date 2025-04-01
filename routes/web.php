@@ -3,7 +3,9 @@
 use App\Http\Controllers\AdminAuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AutoController;
+use App\Http\Controllers\MessageController;
 use App\Models\Auto;
+use App\Models\Message;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +40,9 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('/cestino/elimina/{id}', [AutoController::class, 'forceDelete'])->name('auto.forceDelete');
 
     Route::post('/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
+
+    Route::get('/admin/messages', [MessageController::class, 'showAdminMessages'])->name('messages')->middleware('auth');
+
 });
 
 

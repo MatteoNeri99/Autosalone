@@ -31,6 +31,9 @@
                                 <a class="nav-link" href="{{ route('auto.create') }}">Aggiungi Auto</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" href="{{ route('messages') }}">Messaggi</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('auto.cestino') }}">Cestino</a>
                             </li>
                             <li class="nav-item">

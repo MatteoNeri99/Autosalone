@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AutoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MessageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,4 +23,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/auto', [AutoController::class, 'index']);
 Route::get('/auto/search', [AutoController::class, 'search']);
 Route::get('/auto/{id}', [AutoController::class, 'show']);
+
+
+
+Route::post('/messages', [MessageController::class, 'store']); // Per salvare un messaggio
+Route::get('/admin/messages', [MessageController::class, 'index'])->middleware('auth:sanctum');
 
