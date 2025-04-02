@@ -73,6 +73,10 @@
             </div>
 
             <div class="contenitore">
+                <div class="form-group">
+                    <label for="cambio">cambio</label>
+                    <input type="text" class="form-control" id="cambio" name="cambio" value="{{ old('cambio', $auto->cambio) }}" required>
+                </div>
 
                 <div class="form-group">
                     <label for="colore">Colore</label>

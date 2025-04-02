@@ -36,9 +36,11 @@ class AutoSeeder extends Seeder
                 'nuova' => rand(0, 1) ? true : false,
                 'descrizione' => 'Descrizione auto generata automaticamente.',
                 'foto' => json_encode([
-                    'storage/imgAuto/2rHmmAJZCRGQo7IeyS9CIvQG9J6wDX7x0Dfvlq5b.jpg'
-                ])
+                    'storage/imgAuto/2eIZ2M5kp2inGJ7ZivEIXj8E1kGxbApGX79AChcB.jpg'  // Immagine locale
+                ]),
+                'cambio' => ['automatico', 'manuale', 'sequenziale'][rand(0, 2)] // Cambio
             ];
+
         }
 
 

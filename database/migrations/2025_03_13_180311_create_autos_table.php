@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('emissioni');
             $table->integer('km')->nullable();
             $table->string('colore');
+            $table->string('cambio');
             $table->integer('posti');
             $table->integer('porte');
             $table->integer('prezzo');

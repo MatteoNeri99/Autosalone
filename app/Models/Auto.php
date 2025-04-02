@@ -14,7 +14,7 @@ class Auto extends Model
     protected $fillable = [
        'anno', 'marca', 'modello','cilindrata', 'cavalli',
         'emissioni', 'km', 'colore', 'posti', 'porte', 'prezzo',
-        'nuova', 'foto', 'tipologia_id','carburante_id','descrizione','status',
+        'nuova', 'foto', 'tipologia_id','carburante_id','descrizione','status','cambio'
     ];
 
 

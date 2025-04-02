@@ -64,6 +64,7 @@ class AutoController extends Controller
             'emissioni' => 'required|string|max:255',
             'km' => 'required|integer',
             'colore' => 'required|string|max:255',
+            'cambio' => 'required|string|max:255',
             'posti' => 'required|integer',
             'porte' => 'required|integer',
             'prezzo' => 'required|integer',
@@ -84,6 +85,7 @@ class AutoController extends Controller
         $auto->emissioni = $data['emissioni'];
         $auto->km = $data['km'];
         $auto->colore = $data['colore'];
+        $auto->cambio = $data['cambio'];
         $auto->posti = $data['posti'];
         $auto->porte = $data['porte'];
         $auto->prezzo = $data['prezzo'];
@@ -139,6 +141,7 @@ class AutoController extends Controller
             'emissioni' => 'required|string|max:255',
             'km' => 'required|integer',
             'colore' => 'required|string|max:255',
+            'cambio' => 'required|string|max:255',
             'posti' => 'required|integer',
             'porte' => 'required|integer',
             'prezzo' => 'required|integer',
@@ -182,6 +185,7 @@ class AutoController extends Controller
             'emissioni' => $request->emissioni,
             'km' => $request->km,
             'colore' => $request->colore,
+            'cambio' => $request->cambio,
             'posti' => $request->posti,
             'porte' => $request->porte,
             'prezzo' => $request->prezzo,

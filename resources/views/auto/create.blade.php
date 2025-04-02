@@ -74,6 +74,11 @@
 
             <div class="contenitore">
                 <div class="form-group">
+                    <label for="cambio">Cambio</label>
+                    <input type="text" class="form-control" id="cambio" name="cambio" required>
+                </div>
+
+                <div class="form-group">
                     <label for="colore">Colore</label>
                     <input type="text" class="form-control" id="colore" name="colore" required>
                 </div>

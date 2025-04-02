@@ -108,6 +108,32 @@ class AutoController extends Controller
         return response()->json($auto, 200);
     }
 
+    public function ultimeAuto()
+    {
+
+        $ultimeAuto = Auto::orderBy('created_at', 'desc')->limit(9)->get();
+
+
+        $ultimeAuto->transform(function ($auto) {
+
+            $auto->immagini = collect(json_decode($auto->foto))->map(function ($img) {
+                return url('storage/' . $img);
+            });
+
+
+            $auto->carburante_nome = $auto->carburante ? $auto->carburante->nome : null;
+
+
+            $auto->tipologia_nome = $auto->tipologia ? $auto->tipologia->nome : null;
+
+            return $auto;
+        });
+
+
+        return response()->json($ultimeAuto);
+    }
+
+
 
 
 

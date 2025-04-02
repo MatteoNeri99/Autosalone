@@ -38,6 +38,7 @@
             <p class="card-text">Carburante: {{ $auto->carburante->nome }}</p>
             <p class="card-text">Km: {{ $auto->km }} km</p>
             <p class="card-text">Colore: {{ $auto->colore }}</p>
+            <p class="card-text">Cambio: {{ $auto->cambio }}</p>
             <p class="card-text">Posti: {{ $auto->posti }}</p>
             <p class="card-text">Porte: {{ $auto->porte }}</p>
             <p class="card-text">Prezzo: €{{ number_format($auto->prezzo, 2) }}</p>
