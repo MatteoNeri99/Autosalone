@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 
 class AutoController extends Controller
 {
-    // Restituisce tutte le auto
     public function index(Request $request)
     {
         $query = Auto::with(['carburante', 'tipologia']); // Includi relazioni
@@ -70,23 +69,25 @@ class AutoController extends Controller
             $query->where('carburante_id', $request->carburante_id);
         }
 
-        // Recupera le auto filtrate
-        $autos = $query->get();
+        // Paginazione a blocchi di 18
+        $autos = $query->paginate(18);
 
-        // Modifica il campo delle immagini e sostituisce ID con nome
-        $autos->each(function ($auto) {
-            // Decodifica l'array di immagini e aggiungi il percorso completo
+        // Elabora immagini e relazioni per ogni auto
+        collect($autos->items())->each(function ($auto) {
+            // Immagini
             $auto->immagini = collect(json_decode($auto->foto))->map(function ($img) {
                 return url('storage/' . $img);
             });
 
-            // Sostituisci l'ID con il nome delle relazioni
+            // Relazioni: nome carburante e tipologia
             $auto->carburante = $auto->carburante ? $auto->carburante->nome : null;
             $auto->tipologia = $auto->tipologia ? $auto->tipologia->nome : null;
         });
 
+        // Restituisce dati + meta per la paginazione
         return response()->json($autos);
     }
+
 
     public function show($id)
     {
