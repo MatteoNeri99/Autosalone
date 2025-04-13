@@ -10,6 +10,10 @@ export default defineConfig({
             input: [
                 'resources/sass/app.scss',
                 'resources/sass/general.scss',
+                'resources/sass/form.scss',
+                'resources/sass/home.scss',
+                'resources/sass/index.scss',
+                'resources/sass/show.scss',
                 'resources/js/app.js',
             ],
             refresh: true,
