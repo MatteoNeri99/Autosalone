@@ -70,7 +70,7 @@ class AutoController extends Controller
         }
 
         // Paginazione a blocchi di 18
-        $autos = $query->paginate(18);
+        $autos = $query->orderBy('created_at', 'desc')->paginate(18);
 
         // Elabora immagini e relazioni per ogni auto
         collect($autos->items())->each(function ($auto) {
