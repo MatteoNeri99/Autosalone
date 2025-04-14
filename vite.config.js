@@ -14,6 +14,7 @@ export default defineConfig({
                 'resources/sass/home.scss',
                 'resources/sass/index.scss',
                 'resources/sass/show.scss',
+                'resources/js/show.js',
                 'resources/js/app.js',
             ],
             refresh: true,
