@@ -49,7 +49,7 @@
 
     <div class="descrizione">
         <h2>Descrizione :</h2>
-        <p>{{ $auto->descrizione }}</p>
+        <p>{!! nl2br(e($auto->descrizione)) !!}</p>
     </div>
 
 </div>
